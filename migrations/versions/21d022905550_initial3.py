@@ -1,8 +1,8 @@
-"""Tables change
+"""initial3
 
-Revision ID: c0257237d4f4
+Revision ID: 21d022905550
 Revises: 
-Create Date: 2023-07-16 16:22:46.557042
+Create Date: 2023-07-16 22:34:56.491911
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c0257237d4f4'
+revision = '21d022905550'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,20 +21,17 @@ def upgrade() -> None:
     op.create_table('role',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.Column('permissions', sa.JSON(), nullable=True),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('permissions', sa.JSON(), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('id')
     )
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('username', sa.String(), nullable=False),
     sa.Column('hashed_password', sa.String(), nullable=False),
-    sa.Column('registered_at', sa.TIMESTAMP(), nullable=True),
-    sa.Column('role_id', sa.Integer(), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=False),
-    sa.Column('is_superuser', sa.Boolean(), nullable=False),
+    sa.Column('is_super', sa.Boolean(), nullable=False),
     sa.Column('is_verified', sa.Boolean(), nullable=False),
-    sa.ForeignKeyConstraint(['role_id'], ['role.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
